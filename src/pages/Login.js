@@ -42,9 +42,7 @@ export default function Login() {
           <input className="input" type="password" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} required />
           <button className="button" type="submit">Login</button>
           {error && <div style={{ color: 'crimson', marginTop: 8 }}>{error}</div>}
-          <div style={{ marginTop: 12, fontSize: 13, color: '#555' }}>
-            Use <b>student@example.com</b> / <b>password123</b> (or admin/staff)
-          </div>
+          
         </form>
       </div>
     </div>

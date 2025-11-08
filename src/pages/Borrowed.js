@@ -10,13 +10,23 @@ export default function Borrowed() {
     setLoading(true);
     var res;
     try {
-      if(user.role = 'admin'){
+      console.log("User Role: ", user.role);
+      if(user.role == 'admin'){
         res = await API.get('/borrow/borrowed');
       }else{
         res = await API.get('/borrow');
       }
       const data = normalizeData(res);
-      setItems(Array.isArray(data) ? data : []);
+      console.log("Borrowed Items Data: ", data);
+      if(user.role == 'student'){
+        const filteredData = data.filter(item => 
+          item.status === 'approved' || item.status === 'pending'
+        );
+        setItems(Array.isArray(filteredData) ? filteredData : []);
+      }else{
+        setItems(Array.isArray(data) ? data : []);
+      }
+      
     } catch (err) {
       console.error(err);
       setItems([]);
@@ -25,7 +35,7 @@ export default function Borrowed() {
 
   useEffect(()=>{ load(); }, []);
 
-  const textToBeShownOnUi = user.role = 'admin'? 'Borrowed Items' : 'My Borrowed Items';
+  const textToBeShownOnUi = user.role === 'admin'? 'Borrowed Items' : 'My Borrowed Items';
 
   return (
     <div className="app-container">
